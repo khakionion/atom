@@ -13,11 +13,13 @@ TextNodeFilter = { acceptNode: -> NodeFilter.FILTER_ACCEPT }
 NoScope = ['no-scope']
 LongLineLength = 1000
 
-# Public: Represents the entire visual pane in Atom.
+# Essential: Represents the entire visual pane in Atom.
 #
 # The EditorView manages the {Editor}, which manages the file buffers.
 #
-# ## Requiring in packages
+# ## Examples
+#
+# Requiring in packages
 #
 # ```coffee
 # {EditorView} = require 'atom'
@@ -25,14 +27,14 @@ LongLineLength = 1000
 # miniEditorView = new EditorView(mini: true)
 # ```
 #
-# ## Iterating over the open editor views
+# Iterating over the open editor views
 #
 # ```coffee
 # for editorView in atom.workspaceView.getEditorViews()
 #   console.log(editorView.getEditor().getPath())
 # ```
 #
-# ## Subscribing to every current and future editor
+# Subscribing to every current and future editor
 #
 # ```coffee
 # atom.workspace.eachEditorView (editorView) ->
@@ -105,10 +107,10 @@ class EditorView extends View
 
   # The constructor for setting up an `EditorView` instance.
   #
-  # editorOrOptions - Either an {Editor}, or an object with one property, `mini`.
-  #                   If `mini` is `true`, a "miniature" `Editor` is constructed.
-  #                   Typically, this is ideal for scenarios where you need an Atom editor,
-  #                   but without all the chrome, like scrollbars, gutter, _e.t.c._.
+  # * `editorOrOptions` - Either an {Editor}, or an {Object} with one property: `mini`.
+  #   If `mini` is `true`, a "miniature" `Editor` is constructed.
+  #   Typically, this is ideal for scenarios where you need an Atom editor,
+  #   but without all the chrome, like scrollbars, gutter, _e.t.c._.
   #
   initialize: (editorOrOptions) ->
     if editorOrOptions instanceof Editor
@@ -301,7 +303,7 @@ class EditorView extends View
 
   # Public: Set whether invisible characters are shown.
   #
-  # showInvisibles - A {Boolean} which, if `true`, show invisible characters.
+  # * `showInvisibles` A {Boolean} which, if `true`, show invisible characters.
   setShowInvisibles: (showInvisibles) ->
     return if showInvisibles == @showInvisibles
     @showInvisibles = showInvisibles
@@ -309,11 +311,11 @@ class EditorView extends View
 
   # Public: Defines which characters are invisible.
   #
-  # invisibles - An {Object} defining the invisible characters:
-  #   :eol   - The end of line invisible {String} (default: `\u00ac`).
-  #   :space - The space invisible {String} (default: `\u00b7`).
-  #   :tab   - The tab invisible {String} (default: `\u00bb`).
-  #   :cr    - The carriage return invisible {String} (default: `\u00a4`).
+  # * `invisibles` An {Object} defining the invisible characters:
+  #   * `eol` The end of line invisible {String} (default: `\u00ac`).
+  #   * `space` The space invisible {String} (default: `\u00b7`).
+  #   * `tab` The tab invisible {String} (default: `\u00bb`).
+  #   * `cr` The carriage return invisible {String} (default: `\u00a4`).
   setInvisibles: (@invisibles={}) ->
     _.defaults @invisibles,
       eol: '\u00ac'
@@ -324,8 +326,8 @@ class EditorView extends View
 
   # Public: Sets whether you want to show the indentation guides.
   #
-  # showIndentGuide - A {Boolean} you can set to `true` if you want to see the
-  #                   indentation guides.
+  # * `showIndentGuide` A {Boolean} you can set to `true` if you want to see the
+  #   indentation guides.
   setShowIndentGuide: (showIndentGuide) ->
     return if showIndentGuide == @showIndentGuide
     @showIndentGuide = showIndentGuide
@@ -335,7 +337,7 @@ class EditorView extends View
   #
   # This only affects mini editors.
   #
-  # placeholderText - A {String} of text to display when empty.
+  # * `placeholderText` A {String} of text to display when empty.
   setPlaceholderText: (placeholderText) ->
     return unless @mini
     @placeholderText = placeholderText
@@ -650,28 +652,28 @@ class EditorView extends View
 
   # Public: Scrolls the editor to the given buffer position.
   #
-  # bufferPosition - An object that represents a buffer position. It can be either
-  #                  an {Object} (`{row, column}`), {Array} (`[row, column]`), or {Point}
-  # options - A hash matching the options available to {::scrollToPixelPosition}
+  # * `bufferPosition` An object that represents a buffer position. It can be either
+  #   an {Object} (`{row, column}`), {Array} (`[row, column]`), or {Point}
+  # * `options` (optional) {Object} matching the options available to {::scrollToPixelPosition}
   scrollToBufferPosition: (bufferPosition, options) ->
     @scrollToPixelPosition(@pixelPositionForBufferPosition(bufferPosition), options)
 
   # Public: Scrolls the editor to the given screen position.
   #
-  # screenPosition - An object that represents a buffer position. It can be either
-  #                  an {Object} (`{row, column}`), {Array} (`[row, column]`), or {Point}
-  # options - A hash matching the options available to {::scrollToPixelPosition}
+  # * `screenPosition` An object that represents a buffer position. It can be either
+  #   an {Object} (`{row, column}`), {Array} (`[row, column]`), or {Point}
+  # * `options` (optional) {Object} matching the options available to {::scrollToPixelPosition}
   scrollToScreenPosition: (screenPosition, options) ->
     @scrollToPixelPosition(@pixelPositionForScreenPosition(screenPosition), options)
 
   # Public: Scrolls the editor to the given pixel position.
   #
-  # pixelPosition - An object that represents a pixel position. It can be either
-  #                 an {Object} (`{row, column}`), {Array} (`[row, column]`), or
-  #                 {Point}.
-  # options - A hash with the following keys:
-  #   :center - if `true`, the position is scrolled such that it's in
-  #             the center of the editor
+  # * `pixelPosition` An object that represents a pixel position. It can be either
+  #   an {Object} (`{row, column}`), {Array} (`[row, column]`), or
+  #   {Point}.
+  # * `options` (optional) {Object} with the following keys:
+  #   * `center` if `true`, the position is scrolled such that it's in
+  #     the center of the editor
   scrollToPixelPosition: (pixelPosition, options) ->
     return unless @attached
     @scrollVertically(pixelPosition, options)
@@ -682,7 +684,7 @@ class EditorView extends View
   # "Highlighting" essentially just adds the `fold-selected` class to the line's
   # DOM element.
   #
-  # bufferRange - The {Range} to check.
+  # * `bufferRange` The {Range} to check.
   highlightFoldsContainingBufferRange: (bufferRange) ->
     screenLines = @editor.linesForScreenRows(@firstRenderedScreenRow, @lastRenderedScreenRow)
     for screenLine, i in screenLines
@@ -721,7 +723,7 @@ class EditorView extends View
 
   # Public: Enables/disables soft wrap on the editor.
   #
-  # softWrap - A {Boolean} which, if `true`, enables soft wrap
+  # * `softWrap` A {Boolean} which, if `true`, enables soft wrap
   setSoftWrap: (softWrap) ->
     if softWrap
       @addClass 'soft-wrap'
@@ -731,7 +733,7 @@ class EditorView extends View
 
   # Public: Sets the font size for the editor.
   #
-  # fontSize - A {Number} indicating the font size in pixels.
+  # * `fontSize` A {Number} indicating the font size in pixels.
   setFontSize: (fontSize) ->
     @css('font-size', "#{fontSize}px")
 
@@ -750,7 +752,7 @@ class EditorView extends View
 
   # Public: Sets the font family for the editor.
   #
-  # fontFamily - A {String} identifying the CSS `font-family`.
+  # * `fontFamily` A {String} identifying the CSS `font-family`.
   setFontFamily: (fontFamily='') ->
     @css('font-family', fontFamily)
 
@@ -767,7 +769,7 @@ class EditorView extends View
   #
   # Calling this method has no effect when called on a mini editor.
   #
-  # lineHeight - A {Number} without a unit suffix identifying the CSS
+  # * `lineHeight` A {Number} without a unit suffix identifying the CSS
   # `line-height`.
   setLineHeight: (lineHeight) ->
     return if @mini
@@ -1230,7 +1232,7 @@ class EditorView extends View
 
   # Public: Given a row number, identifies if it is currently visible.
   #
-  # row - A row {Number} to check
+  # * `row` A row {Number} to check
   #
   # Returns a {Boolean}.
   isScreenRowVisible: (row) ->
@@ -1320,8 +1322,8 @@ class EditorView extends View
 
   # Public: Converts a buffer position to a pixel position.
   #
-  # position - An object that represents a buffer position. It can be either
-  #            an {Object} (`{row, column}`), {Array} (`[row, column]`), or {Point}
+  # * `position` An object that represents a buffer position. It can be either
+  #   an {Object} (`{row, column}`), {Array} (`[row, column]`), or {Point}
   #
   # Returns an object with two values: `top` and `left`, representing the pixel positions.
   pixelPositionForBufferPosition: (position) ->
@@ -1329,8 +1331,8 @@ class EditorView extends View
 
   # Public: Converts a screen position to a pixel position.
   #
-  # position - An object that represents a screen position. It can be either
-  #            an {Object} (`{row, column}`), {Array} (`[row, column]`), or {Point}
+  # * `position` An object that represents a screen position. It can be either
+  #   an {Object} (`{row, column}`), {Array} (`[row, column]`), or {Point}
   #
   # Returns an object with two values: `top` and `left`, representing the pixel positions.
   pixelPositionForScreenPosition: (position) ->
